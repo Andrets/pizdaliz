@@ -10,18 +10,21 @@
 		/>
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 		<title>{{ title }}</title>
+		<link rel="stylesheet" type="text/css" href={% static 'css/register.css' %}>
 		{% include 'base.html' %}
 	</head>
 	<body>
 		{% include 'header.html' %}
 		<main>
 			<div class="container-sm text-center w-25">
-				<h1 class='fw-normal text-black display-5'>Вход</h1>
+				<h1 class='fw-normal text-black display-5'>Регистрация</h1>
 				<div class="container-sm w-75 text-center">
 					<form method="POST" class="form">
 						{% csrf_token %}
 						<input type="text" class="form-control mt-3" title="Логин" id="username" name="username" placeholder="Логин..." />
+						<input type="email" class="form-control mt-3" title="Почта" id="email" name="email" placeholder="Почта..." />
 						<input type="password" class="form-control mt-3" title="Пароль" id="password" name="password" placeholder="Пароль..." />
+						<input type="password" class="form-control mt-3" title="Повторный пароль" id="confirm_password" name="confirm_password" placeholder="Подтвердите пароль..." />
 						<button class="btn btn-secondary w-100 mt-3" type="submit">Войти</button>
 					</form>
 				</div>

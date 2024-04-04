@@ -29,6 +29,12 @@ from django.core.exceptions import ValidationError
 #       raise ValidationError('Passwords do not match!')
 #     return password
 
+class RegisterForm(forms.Form):
+  username = forms.CharField(label="Username", max_length=50, widget=forms.TextInput)
+  email = forms.EmailField(label="Email", max_length=50, widget=forms.TextInput)
+  password = forms.CharField(label="Password", max_length=50, widget=forms.PasswordInput)
+  confirm_password = forms.CharField(label="Confirm Password", max_length=50, widget=forms.PasswordInput)
+    
 class LoginForm(forms.Form):
   username = forms.CharField(label="Username", max_length=50, widget=forms.TextInput)
   password = forms.CharField(label="Password", max_length=50, widget=forms.PasswordInput)

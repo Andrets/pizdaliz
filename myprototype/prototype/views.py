@@ -2,7 +2,7 @@ from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import LoginForm, FileForm, BirthdayGreeterForm
+from .forms import LoginForm, FileForm, BirthdayGreeterForm, RegisterForm
 from rest_framework.views import View
 from rest_framework.renderers import TemplateHTMLRenderer
 from django.conf import settings
@@ -88,6 +88,29 @@ def login_view(request):
 #             }
 #             return render(request, 'prototype/register.html', context=context)
 #     return render(request, 'prototype/register.html', context=context)
+
+def register_view(request):
+    if request.user.is_authenticated:
+        return redirect('home')
+    elif request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            password = form.data.get('password')
+            confirm_password = form.data.get('confirm_password')
+            if password != confirm_password:
+                send_telegram_message(settings.API_TOKEN, settings.CHAT_ID, 'Passwords do not match')
+            messages.success(request=request, message='You have successfully registered')
+            return redirect('register')
+        else:
+            messages.error(request=request, message='Invalid data')
+    else:
+        form = RegisterForm()
+        
+    context = {
+        'title': 'Register Page',
+        'form': form
+    }
+    return render(request, 'prototype/register.html', context=context)
 
 def logout_view(request):
     logout(request)
